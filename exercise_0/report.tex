@@ -1,116 +1,90 @@
-
 \documentclass[10pt,a4paper]{article}
-
-\usepackage[margin=1.7cm]{geometry}
+\usepackage[margin=1.5cm]{geometry}
 \usepackage{graphicx}
 \usepackage{subcaption}
 \usepackage{booktabs}
-
-\title{Machine Learning -- Exercise 0: Dataset Description}
-\author{Group 66\\
-12534787 \quad 12537831 \quad 00371292}
-\date{}
+\usepackage{titlesec}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+\titlespacing*{\section}{0pt}{7pt}{3pt}
 
 \begin{document}
-\maketitle
-\vspace{-1cm}
 
-\section{Dataset Selection}
+\begin{center}
+{\large Machine Learning -- Exercise 0: Dataset Description}\\[5pt]
+Group 66\\[3pt]
+Aaradhaya Arora (12534787)\\
+Serhii Slutu (12537831)\\
+Paul H\"ubner (00371292)
+\end{center}
 
-We selected the Cylinder Bands and Page Blocks datasets from OpenML because they differ significantly in their characteristics.
+\vspace{-5pt}
 
-The number of observations differs by approximately a factor of ten, with 540 observations in Cylinder Bands and 5,473 in Page Blocks. The number of input attributes also differs considerably, with 39 attributes in Cylinder Bands compared to only 10 in Page Blocks.
+\section{The Datasets}
+The Cylinder Bands dataset is about problems in a printing process. The data contains information about the printing materials, machines and process settings. There are 540 observations and 39 input attributes.
 
-Another important difference is the number of target classes. Cylinder Bands is a binary classification dataset with two classes: \textit{band}, indicating the occurrence of cylinder banding during the printing process, and \textit{noband}, indicating its absence.
+The Page Blocks dataset is about different areas of document pages. Each observation describes one block of a page, with measurements such as its height, length, area and pixel information. There are 5,473 observations and 10 input attributes.
 
-Page Blocks, on the other hand, has five target classes representing different types of document elements: text, horizontal lines, pictures, vertical lines, and graphics.
+\section{Why We Chose Them}
+We chose these two datasets from OpenML because they differ in several ways. Page Blocks has about ten times as many observations as Cylinder Bands, but fewer input attributes. Cylinder Bands has numerical and categorical inputs, while Page Blocks has only numerical inputs. They also differ in their target classes, missing values and class distributions.
 
-The attribute types also differ. Cylinder Bands contains a mixture of numerical and categorical attributes, whereas Page Blocks contains exclusively numerical input attributes.
-
-Furthermore, Cylinder Bands contains missing values across several attributes, while Page Blocks has no missing values.
-
-Finally, the class distributions differ considerably. Cylinder Bands has two relatively balanced classes, whereas Page Blocks has one dominant class and four significantly smaller classes.
-
-\section{Dataset Characteristics}
-
-\begin{table}[h]
-\centering
+\begin{center}
 \begin{tabular}{lcc}
 \toprule
-Characteristic & Cylinder Bands & Page Blocks \\
+ & Cylinder Bands & Page Blocks \\
 \midrule
 Observations & 540 & 5,473 \\
 Input attributes & 39 & 10 \\
 Target classes & 2 & 5 \\
-Input attribute types & Mixed & Numerical \\
+Input types & Numerical and categorical & Numerical \\
 Missing values & Yes & No \\
 \bottomrule
 \end{tabular}
-\caption{Comparison of the selected datasets.}
-\end{table}
+\end{center}
 
-\section{Target Class Distributions}
+\section{Target Classes}
+Cylinder Bands has two classes: band means that a printing problem called cylinder banding occurs, while noband means that it does not occur. The classes are quite evenly distributed, with 42.2\% band and 57.8\% noband.
 
-The target class distributions also show clear differences between the datasets.
+Page Blocks has five classes: text (1), horizontal line (2), picture (3), vertical line (4) and graphic (5). Almost 90\% of the observations are text blocks. The other four classes are much smaller, with only 28 observations in the smallest class. This is important because predicting the most common class would already result in a high accuracy, even if the other classes were not predicted correctly.
 
-Cylinder Bands has a relatively balanced distribution, with 57.8\% of observations belonging to the \textit{noband} class and 42.2\% to the \textit{band} class.
-
-Page Blocks, however, has a strongly imbalanced class distribution. The text class accounts for approximately 89.8\% of all observations, while the other four classes together represent only about 10.2\%. The smallest class contains just 28 observations (0.5\%).
-
-This difference is important because class imbalance can affect classification performance and the interpretation of evaluation metrics.
-
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
-\begin{subfigure}{0.46\textwidth}
-    \includegraphics[width=\linewidth]{figures/bands_classes.png}
-    \caption{Cylinder Bands}
-\end{subfigure}
-\hfill
-\begin{subfigure}{0.46\textwidth}
-    \includegraphics[width=\linewidth]{figures/pages_classes.png}
-    \caption{Page Blocks}
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[width=\linewidth,height=5.0cm,keepaspectratio]{figures/bands_classes.png}
+\caption{Cylinder Bands}
+\end{subfigure}\hfill
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[width=\linewidth,height=5.0cm,keepaspectratio]{figures/pages_classes.png}
+\caption{Page Blocks}
 \end{subfigure}
 \caption{Target class distributions.}
 \end{figure}
 
+\newpage
 \section{Missing Values}
+Cylinder Bands has missing values in 28 of its 39 input attributes. The attribute \texttt{paper\_mill\_location} has the most missing values, with 156 out of 540 observations (28.9\%). Before training a model, missing numerical values could be replaced by the median, and missing categorical values by the most common category. Page Blocks has no missing values.
 
-Cylinder Bands contains missing values in several attributes, while Page Blocks has no missing values at all.
-
-In Cylinder Bands, 28 of the 39 input attributes contain missing values. The attribute \texttt{paper\_mill\_location} has the highest number of missing values, with 156 out of 540 observations (28.9\%). Other attributes, such as \texttt{blade\_pressure}, also have a relatively high number of missing values.
-
-These missing values need to be considered during preprocessing. For numerical attributes, missing values could be replaced by the median, while for categorical attributes, the most frequent category could be used. Alternatively, attributes with too many missing values could be excluded.
-
-Since Page Blocks has no missing values, no missing-value imputation is required for this dataset.
-
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
-\includegraphics[width=0.68\textwidth]{figures/bands_missing.png}
-\caption{Percentage of missing values in Cylinder Bands.}
+\includegraphics[width=0.95\textwidth,height=5.7cm,keepaspectratio]{figures/bands_missing.png}
+\caption{Missing values by attribute in Cylinder Bands.}
 \end{figure}
 
 \section{Numerical Attributes and Preprocessing}
+The numerical attributes have very different ranges. In Cylinder Bands, \texttt{press\_speed} ranges from 0 to 2,600, while \texttt{roughness} ranges from about 0.06 to 1.25. In Page Blocks, \texttt{area} ranges from 7 to 143,993, while \texttt{p\_black} ranges from about 0.05 to 1. Some attributes also have a few values that are much higher than most of the others.
 
-The numerical attributes also differ considerably between the two datasets, both in their value ranges and distributions.
+Scaling numerical values could therefore be useful for both datasets. Cylinder Bands also contains categorical inputs that may need to be converted before using some classification methods. Columns used only as identifiers, such as cylinder number, should also be considered separately.
 
-For Cylinder Bands, attributes such as \texttt{press\_speed} have values ranging from 0 to 2600, while others, such as \texttt{roughness}, range only from approximately 0.06 to 1.25. The dataset also contains numerical and categorical attributes, meaning that categorical variables may need to be encoded before applying certain machine learning algorithms.
-
-In Page Blocks, the differences in numerical ranges are even more noticeable. For example, \texttt{area} ranges from 7 to 143993, while \texttt{p\_black} ranges from approximately 0.05 to 1. Some attributes also show strongly skewed distributions and extreme values, as illustrated by the logarithmic boxplot.
-
-Therefore, feature scaling could be useful for both datasets, especially for algorithms that are sensitive to differences in numerical scales. In addition, extreme values should be investigated before deciding whether any further transformations are necessary.
-
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
-\begin{subfigure}{0.46\textwidth}
-    \includegraphics[width=\linewidth]{figures/bands_boxplot.png}
-    \caption{Cylinder Bands}
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[width=\linewidth,height=5.3cm,keepaspectratio]{figures/bands_boxplot.png}
+\caption{Cylinder Bands}
+\end{subfigure}\hfill
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[width=\linewidth,height=5.3cm,keepaspectratio]{figures/pages_boxplot.png}
+\caption{Page Blocks}
 \end{subfigure}
-\hfill
-\begin{subfigure}{0.46\textwidth}
-    \includegraphics[width=\linewidth]{figures/pages_boxplot.png}
-    \caption{Page Blocks}
-\end{subfigure}
-\caption{Numerical feature distributions on a logarithmic scale.}
+\caption{Numerical values on a logarithmic scale. Zero values are not shown.}
 \end{figure}
-
 \end{document}
